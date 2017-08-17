@@ -2,25 +2,43 @@ package Cheese;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import Cheese.Board;
 import Pieces.Pawn;
 
 public class BoardTest {
-	@Test
-	public void create() throws Exception {
-		Board board = new Board();
-
-		Pawn white = new Pawn(Pawn.WHITE_COLOR);
-		board.add(white);
-		assertEquals(1, board.size());
-		assertEquals(white, board.findPawn(0));
-
-		Pawn black = new Pawn(Pawn.BLACK_COLOR);
-		board.add(black);
-		assertEquals(2, board.size());
-		assertEquals(black, board.findPawn(1));
-	}
-
+    private Board board;
+    
+    @Before
+    public void setup() {
+        board = new Board();
+    }
+    
+    @Test
+    public void create() throws Exception {
+        Pawn white = new Pawn(Pawn.WHITE_COLOR, Pawn.WHITE_REPRESENTATION);
+        board.addWhitePawn(white);
+        assertEquals(1, board.size());
+        assertEquals(white, board.findWhitePawn(0));
+        
+        Pawn black = new Pawn(Pawn.BLACK_COLOR, Pawn.BLACK_REPRESENTATION);
+        board.addBlackPawn(black); 
+        assertEquals(2, board.size());
+        assertEquals(black, board.findBlackPawn(0));
+    }
+    
+    @Test
+    public void initialize() throws Exception {
+        board.initialize();
+        assertEquals("pppppppp", board.getWhitePawnsResult());
+        assertEquals("PPPPPPPP", board.getBlackPawnsResult());
+    }
+    
+    @Test
+    public void print() throws Exception {
+        board.initialize();
+        board.print();
+    }
 }
